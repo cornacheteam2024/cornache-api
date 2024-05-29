@@ -1,8 +1,8 @@
 const { Firestore } = require("@google-cloud/firestore");
-const path = require("path");
+// const path = require("path");
 
-// const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-const key = path.resolve(__dirname, "../utils/cornache-key.json");
+const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+// const key = path.resolve(__dirname, "../utils/cornache-key.json");
 const db = new Firestore({ keyFilename: key });
 
 async function getUserDetail(userId) {
