@@ -1,10 +1,12 @@
 const { Storage } = require('@google-cloud/storage');
+const format = require("dateformat");
 const path = require('path');
 const key = path.resolve(__dirname, './servis-key.json')
 
+
 const storage = new Storage({
     projectId: 'cornache-caps',
-    keyFilename: key
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 
 const bucketName = "cornache-bucket";
@@ -19,7 +21,7 @@ const bucketUpload = {}
 bucketUpload.uploadToBucket = (req, res, next) => {
     if (!req.file) return next();
 
-    const gcsname = `user-profile/${Date.now()}~${req.file.originalname}`;
+    const gcsname = `user-profile/profile-${format(new Date(), "yyyy-mm-dd")}~${req.file.originalname}`;
     const file = bucket.file(gcsname);
 
     const stream = file.createWriteStream({

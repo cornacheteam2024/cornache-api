@@ -37,6 +37,11 @@ async function getUserById(user_id) {
 
     let data;
     userRef.forEach(item => { data = item.data() });
+    // const profile = {
+    //     username: data.username,
+    //     avatar_img:data.avatar_img
+    // }
+    // console.log(profile);
     return data;
 }
 

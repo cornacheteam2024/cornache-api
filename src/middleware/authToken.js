@@ -1,6 +1,7 @@
-const { error } = require('console');
+// const { error } = require('console');
 const jwt = require('jsonwebtoken');
-const { token } = require('morgan');
+// const { token } = require('morgan');
+// const { head } = require('../../routes/ChatRouter');
 require('dotenv').config()
 
 function generateAccessToken(username) {
@@ -13,7 +14,7 @@ const verifyToken = (req, res, next) => {
     const header = req.headers
     const Istoken = header && header.authorization && header.authorization.split(' ')[0] == 'JWT';
     const token = header.authorization.split(' ')[1]
-
+    
     if (Istoken) {
         jwt.verify(token, JWT_KEY, (error, decoded) => {
             if (error) {

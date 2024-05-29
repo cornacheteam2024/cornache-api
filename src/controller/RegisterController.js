@@ -4,6 +4,7 @@ const { uploadToBucket } = require('../utils/uploadToBucket')
 const { generateAccessToken } = require('../middleware/authToken');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+// const { use } = require("../UserRoute");
 
 require('dotenv').config()
 
@@ -17,6 +18,9 @@ const registerController = async (req, res) => {
             message: 'Password tidak cocok!'
         });
     }
+    console.log(confirmPass);
+    console.log(password);
+
 
     let hashedPass = await bcrypt.hashSync(password, 10);
     const newUser = {
@@ -46,7 +50,7 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
     const { username, password } = req.body
     const db = new Firestore({
-        
+
     });
 
     const userSnapshot = await getUsers(username);
@@ -93,15 +97,25 @@ const onLoginController = (req, res) => {
 
 const editProfilController = async (req, res) => {
     const id = req.params.id
-    const user = getUserById(id);
-    let edit = {}
-    user.forEach(u => {
-        edit = {
-            username: u.username,
-            avatar_image: u.avatar_image
+    try {
+        const user = await getUserById(id);
+
+        const profile = {
+            username: user.username,
+            avatar_img: user.avatar_img
         }
-    })
-    return edit;
+        res.status(200).json({
+            error: false,
+            user: profile
+        });
+    } catch (error) {
+        res.status(404).json({
+            error: false,
+            message: 'Gagal mengambil data'
+        });
+    }
+    
+
 }
 
 
@@ -137,4 +151,4 @@ const updateProfilController = async (req, res) => {
 
 }
 
-module.exports = { registerController, loginController, onLoginController, editProfilController ,updateProfilController } 
+module.exports = { registerController, loginController, onLoginController, editProfilController, updateProfilController } 
