@@ -1,30 +1,27 @@
 const { Firestore } = require("@google-cloud/firestore");
-// const path = require("path");
 
 const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-// const key = path.resolve(__dirname, "../utils/cornache-key.json");
 const db = new Firestore({ keyFilename: key });
 
 async function getUserDetail(userId) {
   if (!userId) {
-    throw new Error("userId diperlukan");
+    throw new Error("user_id diperlukan");
   }
 
   try {
-    const userRef = await db.collection("users");
+    const userRef = db.collection("users");
     const userSnapshot = await userRef.where("user_id", "==", userId).get();
 
     const userData = [];
     userSnapshot.forEach((user) => userData.push(user.data()));
 
     if (userSnapshot.empty) {
-      console.log("No matching documents.");
+      console.log("Data user tidak ditemukan");
       return null;
     }
 
     return userData;
   } catch (error) {
-    console.error("Error fetching user details:", error);
     throw error;
   }
 }
@@ -57,8 +54,8 @@ async function getRoomById(roomId) {
   });
 
   if (roomData.length === 0) {
-    console.log("No matching documents.");
-    return null;
+    throw new Error("Tidak ada Ruangan Diskusi yang cocok.");
+    // return null;
   }
 
   return roomData;
@@ -69,4 +66,30 @@ async function createRoom(roomId, roomData) {
   return await roomCollection.doc(roomId).set(roomData);
 }
 
-module.exports = { getUserDetail, getAllRoom, getRoomById, createRoom };
+async function updateRoom(roomId, newRoomData) {
+  const roomCollection = db.collection("rooms").doc(roomId);
+
+  await roomCollection.update(newRoomData);
+}
+
+async function deleteRoom(roomId) {
+  const roomCollection = db.collection("rooms").doc(roomId);
+  const getRoom = await roomCollection.get();
+
+  if (!getRoom.exists) {
+    return false;
+  }
+
+  await roomCollection.delete();
+
+  return true;
+}
+
+module.exports = {
+  getUserDetail,
+  getAllRoom,
+  getRoomById,
+  createRoom,
+  updateRoom,
+  deleteRoom,
+};
