@@ -1,6 +1,7 @@
 const { Storage } = require("@google-cloud/storage");
-const path = require("path");
-const key = path.resolve(__dirname, "./servis-key.json");
+// const path = require("path");
+// const key = path.resolve(__dirname, "./servis-key.json");
+const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 const storage = new Storage({
   projectId: "cornache-caps",
@@ -19,7 +20,7 @@ const bucketUpload = {};
 bucketUpload.uploadToBucket = (req, res, next) => {
   if (!req.file) return next();
 
-  const gcsname = `user-profile/${Date.now()}~${req.file.originalname}`;
+  const gcsname = `room-image/${Date.now()}~${req.file.originalname}`;
   const file = bucket.file(gcsname);
 
   const stream = file.createWriteStream({

@@ -75,8 +75,6 @@ async function createRoomController(req, res) {
       },
     };
 
-    console.log(data);
-
     await createRoom(room_id, data);
 
     return res.status(200).json({
@@ -94,8 +92,9 @@ async function createRoomController(req, res) {
 }
 
 async function updateRoomController(req, res) {
-  const { name, description, image } = req.body;
+  const { name, description } = req.body;
   const { room_id } = req.params;
+  const imageUrl = req.file.cloudStoragePublicUrl;
   const updateAt = Date.now();
 
   try {
@@ -107,7 +106,7 @@ async function updateRoomController(req, res) {
       detail_room: {
         name: name,
         description: description,
-        image: image,
+        image: imageUrl,
         room_id: room_id,
         created_at: getRoom.detail_room.created_at,
         update_at: updateAt,
