@@ -2,7 +2,9 @@ const express = require("express");
 const {
   createRoomController,
   getAllRoomController,
-  getAllRoomByIdController,
+  getRoomByIdController,
+  updateRoomController,
+  deleteRoomController,
 } = require("../controller/roomController");
 const bucketUpload = require("../utils/uploadToBucket");
 const multer = require("../middleware/uploadImage");
@@ -11,7 +13,14 @@ const { verifyToken } = require("../middleware/authToken");
 const router = express.Router();
 
 router.get("/room", verifyToken, getAllRoomController);
-router.get("/room/:room_id", verifyToken, getAllRoomByIdController);
-router.post("/room", multer.none(), createRoomController);
+router.get("/room/:room_id", getRoomByIdController);
+router.post(
+  "/room",
+  multer.single("predicted_image"),
+  bucketUpload.uploadToBucket,
+  createRoomController
+);
+router.patch("/room/:room_id", multer.none(), updateRoomController);
+router.delete("/room/:room_id", multer.none(), deleteRoomController);
 
 module.exports = router;
