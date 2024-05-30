@@ -125,6 +125,7 @@ const updateProfilController = async (req, res) => {
     // const ava = cloudStoragePublicUrl
     const { username } = req.body;
 
+    // const freshAva = 
     try {
         const user = await getUserById(user_id);
         const data = {

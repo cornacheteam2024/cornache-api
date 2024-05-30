@@ -1,4 +1,5 @@
 const { Storage } = require('@google-cloud/storage');
+const { log } = require('console');
 const format = require("dateformat");
 const path = require('path');
 const key = path.resolve(__dirname, './servis-key.json')
@@ -20,8 +21,18 @@ const bucketUpload = {}
 
 bucketUpload.uploadToBucket = (req, res, next) => {
     if (!req.file) return next();
+    const timeStamp = new Date().getTime()
+    const imgName = `${timeStamp}-${req.file.originalname}`;
 
-    const gcsname = `user-profile/profile-${format(new Date(), "yyyy-mm-dd")}~${req.file.originalname}`;
+    let path;
+    if (req.file.fieldname == 'avatar_image') {
+        path = 'user-profile/'
+    } else if (req.file.fieldname == 'predicted_image') {
+        path = 'predicted-image/'
+
+    }
+    
+    const gcsname = path + imgName;
     const file = bucket.file(gcsname);
 
     const stream = file.createWriteStream({

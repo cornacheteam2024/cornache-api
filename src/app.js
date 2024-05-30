@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require('cors');
 const ChatRoute = require('../routes/ChatRouter')
 const UserRoute = require('../routes/UserRoute')
+const handleUploadError = require('./middleware/uploadError')
 // const formidableMiddleware = require('express-formidable');
 // const multer = require('./middleware/uploadImage')
 
