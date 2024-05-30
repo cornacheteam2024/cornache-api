@@ -1,10 +1,10 @@
 const express = require('express');
-const { registerController, loginController, onLoginController, updateProfilController, editProfilController } = require('../src/controller/RegisterController');
-const { verifyToken } = require('../src/middleware/authToken');
-const bucketUpload = require('../src/utils/uploadToBucket');
+const { registerController, loginController, onLoginController, updateProfilController, editProfilController } = require('../controller/RegisterController');
+const { verifyToken } = require('../middleware/authToken');
+const bucketUpload = require('../utils/uploadToBucket');
 
-const multer = require('../src/middleware/uploadImage');
-const handleUploadError = require('../src/middleware/uploadError');
+const multer = require('../middleware/uploadImage');
+const handleUploadError = require('../middleware/uploadError');
 
 const router = express.Router();
 
