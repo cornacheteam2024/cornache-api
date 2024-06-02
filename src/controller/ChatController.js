@@ -39,6 +39,7 @@ const createController = async (req, res) => {
 
 const getChatController = async (req, res) => {
     const room_id = req.params.id
+    const page = parseInt(req.query.page) || 1;
 
     const token = req.headers.authorization;
     // console.log(token);
@@ -50,8 +51,16 @@ const getChatController = async (req, res) => {
     }
 
     try {
-        const chats = await getChats(room_id);
-        
+        const chats = await getChats(room_id, page);
+
+        if (chats.length < 1) {
+            res.status(200).json({
+                error: false,
+                message: 'Dah Habis!',
+
+            })
+        }
+
         res.status(200).json({
             error: false,
             message: `All chats on room ${room_id}`,
