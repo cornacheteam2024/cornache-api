@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 router.post('/', multer.none(), createController);
-router.get('/:id', multer.none(), getChatController);
+router.get('/:id', verifyToken, getChatController);
 
 
 
