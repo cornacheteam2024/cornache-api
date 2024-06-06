@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config()
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 function generateAccessToken(username) {
     return jwt.sign({ username }, process.env.JWT_KEY, { expiresIn: "1day" });
@@ -11,6 +11,7 @@ const verifyToken = (req, res, next) => {
         const header = req.headers
         const Istoken = header && header.authorization && header.authorization.split(' ')[0] == 'Bearer';
         const token = header.authorization.split(' ')[1]
+
 
         if (Istoken && header.authorization !== undefined) {
             jwt.verify(token, JWT_KEY, (error, decoded) => {
@@ -39,7 +40,4 @@ const verifyToken = (req, res, next) => {
         })
     }
 }
-
-
-
 module.exports = { generateAccessToken, verifyToken };
