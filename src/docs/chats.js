@@ -159,7 +159,7 @@ const getChat = {
     ],
     parameters: [
         {
-            name: 'user_id',
+            name: 'room_id',
             in: 'path',
             description: 'Room ID',
             required: true,

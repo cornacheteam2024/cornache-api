@@ -22,7 +22,6 @@ const verifyToken = (req, res, next) => {
                     })
 
                 } else {
-                    // console.log(decoded);
                     res.locals.jwt = decoded
                     next();
                 }

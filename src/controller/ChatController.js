@@ -13,12 +13,14 @@ const createController = async (req, res) => {
         return res.status(404).json({
             error: true,
             status: 'fails',
-            message : 'User tidak ditemukan!'
+            message: 'User tidak ditemukan!'
 
         })
     }
+    // console.log(user_id);
     try {
         const user = await getUserById(user_id);
+        console.log(user);
         const chat = {
             chat_id,
             room_id,
@@ -68,7 +70,7 @@ const getChatController = async (req, res) => {
         const chats = await getChats(room_id, page);
 
         if (chats.length < 1) {
-            res.status(200).json({
+            return res.status(200).json({
                 error: false,
                 message: 'Dah Habis!',
 

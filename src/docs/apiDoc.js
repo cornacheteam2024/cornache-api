@@ -22,226 +22,241 @@ const {
     deleteRoom,
 } = require("./rooms");
 
+
+
+
 const apiDocumentation = {
-    openapi: "3.1.0",
+    openapi: '3.0.1',
     info: {
-        version: "1.0.0",
-        title: "CORNACHE API - Documentation",
-        description: "Description of my API here",
-        // termsOfService: 'https://mysite.com/terms',
-        contact: {
-            name: "Cloud Computing",
-            email: "bangkit@academy.com",
-            url: "https://cornache.com",
+      version: '1.3.0',
+      title: 'My REST API - Documentation',
+      description: 'Description of my API here',
+      termsOfService: 'https://mysite.com/terms',
+      contact: {
+        name: 'Developer name',
+        email: 'dev@example.com',
+        url: 'https://devwebsite.com',
+      },
+      license: {
+        name: 'Apache 2.0',
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html',
+      },
+    },
+    servers: [
+        {
+            url: 'http://localhost:8000',
+            description: 'Local Server',
         },
-        servers: [
-            {
-                url: 'http://localhost:8000',
-                description: 'Local Server',
+        {
+            url: "https://cornache-api-model-umbv3jp3oa-et.a.run.app",
+            description: 'Predict image',
+        },
+        {
+            url: 'https://api.mysite.com',
+            description: 'Production Server',
+        },
+    ],
+    tags: [
+        {
+            name: 'User',
+        },
+        {
+            name: 'Room',
+        },
+        {
+            name: 'Chat',
+        },
+        {
+            name: 'Predict',
+        },
+        {
+            name: 'History',
+        },
+    ],
+    paths: {
+        '/register': {
+            post: createUser,
+            // post: login,
+        },
+        '/login': {
+            post: loginUser,
+            // post: login,
+        },
+        '/profile/{user_id}': {
+            get: getUser,
+            put: updateProfile,
+            // post: login,
+        },
+        '/chat': {
+            post: createChat
+        },
+        '/chat/{room_id}': {
+            get: getChat
+        },
+        '/predict': {
+            post: predictImage
+        },
+        '/history/{user_id}': {
+            get: historyPredict
+        },
+        '/room': {
+            post: createRoom,
+            get: getAllRoom
+        },
+        "/room/{room_id}": {
+            get: getAllRoomById,
+            put: updateRoom,
+            delete: deleteRoom,
+          },
+
+    },
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
             },
-            {
-                url: "https://cornache-api-model-umbv3jp3oa-et.a.run.app",
-                description: 'Predict image',
+        },
+        schemas: {
+            Users,
+            Chat,
+            Predict,
+            History,
+        },
+        responses: {
+            UnauthorizedError: {
+                description: 'Access token is missing or invalid',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'Access token is missing or invalid'
+                                },
+                            },
+                        },
+                    },
+                },
             },
-            {
-                url: 'https://api.mysite.com',
-                description: 'Production Server',
+            NotFound: {
+                description: 'User not found',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'User not found'
+                                },
+                            },
+                        },
+                    },
+                },
             },
-        ],
+            InternalServer: {
+                description: 'Server Error!',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'Internal Server Error!'
+                                },
+                            },
+                        },
+                    },
+                },
+            }
+        },
+        // license: {
+        //     name: 'Apache 2.0',
+        //     url: 'https://www.apache.org/licenses/LICENSE-2.0.html',
+
         tags: [
             {
-                name: 'User',
+                name: "User",
             },
             {
-                name: 'Room',
+                name: "Room",
             },
             {
-                name: 'Chat',
+                name: "Chat",
             },
             {
-                name: 'Predict',
+                name: "Predict",
             },
             {
-                name: 'History',
+                name: "History",
             },
         ],
         paths: {
-            '/register': {
+            "/register": {
                 post: createUser,
                 // post: login,
             },
-            '/login': {
+            "/login": {
                 post: loginUser,
                 // post: login,
             },
-            '/profile/{user_id}': {
+            "/profile/{id}": {
                 get: getUser,
                 put: updateProfile,
                 // post: login,
             },
-            '/chat': {
-                post: createChat
+            "/room": {
+                post: createRoom,
+                get: getAllRoom,
             },
-            '/chat/{user_id}': {
-                get: getChat
+            "/room/{room_id}": {
+                get: getAllRoomById,
+                put: updateRoom,
+                delete: deleteRoom,
             },
-            '/predict': {
-                post: predictImage
+            "/chat": {
+                post: createChat,
             },
-            '/history/{user_id}': {
-                get: historyPredict
+            "/chat/{id}": {
+                get: getChat,
             },
-            // '/room': {
-            //     get: createRoom
-            // }
-
         },
         components: {
             securitySchemes: {
                 bearerAuth: {
-                    type: 'http',
-                    scheme: 'bearer',
-                    bearerFormat: 'JWT',
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
                 },
             },
             schemas: {
-                Users,
                 Chat,
-                Predict,
-                History,
             },
             responses: {
                 UnauthorizedError: {
-                    description: 'Access token is missing or invalid',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'object',
-                                properties: {
-                                    error: {
-                                        type: 'boolean',
-                                        example: 'true'
-                                    },
-                                    message: {
-                                        type: 'string',
-                                        example: 'Access token is missing or invalid'
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                NotFound: {
-                    description: 'User not found',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'object',
-                                properties: {
-                                    error: {
-                                        type: 'boolean',
-                                        example: 'true'
-                                    },
-                                    message: {
-                                        type: 'string',
-                                        example: 'User not found'
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                InternalServer: {
-                    description: 'Server Error!',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'object',
-                                properties: {
-                                    error: {
-                                        type: 'boolean',
-                                        example: 'true'
-                                    },
-                                    message: {
-                                        type: 'string',
-                                        example: 'Internal Server Error!'
-                                    },
-                                },
-                            },
-                        },
-                    },
-                }
-            },
-            // license: {
-            //     name: 'Apache 2.0',
-            //     url: 'https://www.apache.org/licenses/LICENSE-2.0.html',
-
-            tags: [
-                {
-                    name: "User",
-                },
-                {
-                    name: "Room",
-                },
-                {
-                    name: "Chat",
-                },
-                {
-                    name: "Predict",
-                },
-                {
-                    name: "History",
-                },
-            ],
-            paths: {
-                "/register": {
-                    post: createUser,
-                    // post: login,
-                },
-                "/login": {
-                    post: loginUser,
-                    // post: login,
-                },
-                "/profile/{id}": {
-                    get: getUser,
-                    put: updateProfile,
-                    // post: login,
-                },
-                "/room": {
-                    post: createRoom,
-                    get: getAllRoom,
-                },
-                "/room/{room_id}": {
-                    get: getAllRoomById,
-                    put: updateRoom,
-                    delete: deleteRoom,
-                },
-                "/chat": {
-                    post: createChat,
-                },
-                "/chat/{id}": {
-                    get: getChat,
+                    description: "Access token is missing or invalid",
                 },
             },
-            components: {
-                securitySchemes: {
-                    bearerAuth: {
-                        type: "http",
-                        scheme: "bearer",
-                        bearerFormat: "JWT",
-                    },
-                },
-                schemas: {
-                    Chat,
-                },
-                responses: {
-                    UnauthorizedError: {
-                        description: "Access token is missing or invalid",
-                    },
-                },
-            },
-        }
+        },
     }
-}
+  };
+  
+//   export { apiDocumentation };
 
 module.exports = { apiDocumentation };

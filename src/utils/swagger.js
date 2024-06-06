@@ -11,35 +11,35 @@
 // // const swaggerDefinition = JSON.parse(fs.readFileSync('swaggerConfig.json')); 
 
 
-// // const options = {
-// //     definition:
-// //     {
-// //         openapi: '3.0.0',
-// //         info: {
-// //             title: 'API Documentation for cornache-apps',
-// //             version: '1.0.0',
-// //             description:
-// //                 'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
-// //             license: {
-// //                 name: 'Licensed Under MIT',
-// //                 url: 'https://spdx.org/licenses/MIT.html',
-// //             },
-// //             contact: {
-// //                 name: 'JSONPlaceholder',
-// //                 url: 'https://jsonplaceholder.typicode.com',
-// //             },
-// //         },
-// //         servers: [
-// //             {
-// //                 url: 'http://localhost:8000',
-// //                 description: 'Development server',
-// //             },
-// //         ],
-// //     },
+// const options = {
+//     definition:
+//     {
+//         openapi: '3.0.0',
+//         info: {
+//             title: 'API Documentation for cornache-apps',
+//             version: '1.0.0',
+//             description:
+//                 'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+//             license: {
+//                 name: 'Licensed Under MIT',
+//                 url: 'https://spdx.org/licenses/MIT.html',
+//             },
+//             contact: {
+//                 name: 'JSONPlaceholder',
+//                 url: 'https://jsonplaceholder.typicode.com',
+//             },
+//         },
+//         servers: [
+//             {
+//                 url: 'http://localhost:8000',
+//                 description: 'Development server',
+//             },
+//         ],
+//     },
 
-// //     apis: ['./src/routes/*.js'],
+//     apis: ['./src/routes/*.js'],
 
-// // };
+// };
 
 // swaggerDefinition.path = swaggerRoutes.path
 

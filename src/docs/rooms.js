@@ -391,7 +391,31 @@ const createRoom = {
   requestBody: {
     content: {
       "multipart/form-data": {
-        schema: createRoomBody,
+        schema: {
+          type: "object",
+          properties: {
+            user_id: {
+              type: "string",
+              example: "7241e946-4c8b-417c-a746-07bac6832143",
+            },
+            name: {
+              type: "string",
+              example: "penyakit jamur",
+            },
+            room_image: {
+              type: "file",
+              example:
+                "https://storage.googleapis.com/cornache-bucket/room-image/1717094238174-scissors.png",
+            },
+            description: {
+              type: "string",
+              example:
+                "Bercak daun jagung berwarna abu-abu adalah gejala penyakit tanaman yang disebabkan oleh infeksi jamur",
+            },
+
+          },
+
+        },
       },
     },
     required: true,
@@ -431,7 +455,31 @@ const updateRoom = {
   requestBody: {
     content: {
       "multipart/form-data": {
-        schema: createRoomBody,
+        schema: {
+          type: "object",
+          properties: {
+            user_id: {
+              type: "string",
+              example: "7241e946-4c8b-417c-a746-07bac6832143",
+            },
+            name: {
+              type: "string",
+              example: "penyakit jamur",
+            },
+            room_image: {
+              type: "file",
+              example:
+                "https://storage.googleapis.com/cornache-bucket/room-image/1717094238174-scissors.png",
+            },
+            description: {
+              type: "string",
+              example:
+                "Bercak daun jagung berwarna abu-abu adalah gejala penyakit tanaman yang disebabkan oleh infeksi jamur",
+            },
+
+          },
+
+        },
       },
     },
     required: true,

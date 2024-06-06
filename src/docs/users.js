@@ -162,7 +162,8 @@ const createUser = {
                         type: 'object',
                         properties: {
                             error: {
-                                example: 'true'
+                                type: 'boolean',
+                                example: 'false'
                             },
                             message: {
                                 example: 'Berhasil register, silahkan login'
@@ -299,7 +300,8 @@ const getUser = {
                         type: 'object',
                         properties: {
                             error: {
-                                example: 'true'
+                                type: 'boolean',
+                                example: true
                             },
                             message: {
                                 example: 'Berhasil mengubah data!'

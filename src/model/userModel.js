@@ -36,7 +36,7 @@ async function getUserById(user_id) {
   userRef.forEach((item) => {
     data = item.data();
   });
-  // console.log(data);
+  console.log(data);
   return data;
 }
 
