@@ -51,15 +51,15 @@ async function createRoomController(req, res) {
   const room_id = crypto.randomUUID();
   const createdAt = Date.now();
 
+  if (!user_id) {
+    return res.status(404).json({
+      error: true,
+      message: "User tidak ditemukan",
+    });
+  }
+
   try {
     const [getUser] = await getUserDetail(user_id);
-
-    if (!getUser) {
-      return res.status(404).json({
-        error: true,
-        message: "User tidak ditemukan",
-      });
-    }
 
     const usernameUser = getUser.username;
     const data = {
