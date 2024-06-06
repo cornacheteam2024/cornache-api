@@ -1,6 +1,7 @@
 // import { createUser, createUserBody } from './users.ts'
 
-const { createChat, getChat,Chat } = require('./chats');
+const { createChat, getChat, Chat } = require('./chats');
+const { predictImage,historyPredict,Predict,History } = require('./predict');
 const { createUser, createUserBody, loginUser, loginUserBody, updateProfile, updateProfileBody, getUser, Users } = require('./users')
 
 
@@ -25,6 +26,10 @@ const apiDocumentation = {
         {
             url: 'http://localhost:8000',
             description: 'Local Server',
+        },
+        {
+            url: "https://cornache-api-model-umbv3jp3oa-et.a.run.app",
+            description: 'Predict image',
         },
         {
             url: 'https://api.mysite.com',
@@ -57,7 +62,7 @@ const apiDocumentation = {
             post: loginUser,
             // post: login,
         },
-        '/profile/{id}': {
+        '/profile/{user_id}': {
             get: getUser,
             put: updateProfile,
             // post: login,
@@ -65,9 +70,18 @@ const apiDocumentation = {
         '/chat': {
             post: createChat
         },
-        '/chat/{id}': {
+        '/chat/{user_id}': {
             get: getChat
-        }
+        },
+        '/predict': {
+            post: predictImage
+        },
+        '/history/{user_id}': {
+            get: historyPredict
+        },
+        // '/room': {
+        //     get: createRoom
+        // }
 
     },
     components: {
@@ -79,12 +93,71 @@ const apiDocumentation = {
             },
         },
         schemas: {
-            Chat
-
+            Users,
+            Chat,
+            Predict,
+            History,
         },
         responses: {
             UnauthorizedError: {
-                description: 'Access token is missing or invalid'
+                description: 'Access token is missing or invalid',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'Access token is missing or invalid'
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            NotFound: {
+                    description: 'User not found',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    error: {
+                                        type: 'boolean',
+                                        example: 'true'
+                                    },
+                                    message: {
+                                        type: 'string',
+                                        example: 'User not found'
+                                    },
+                                },
+                            },
+                        },
+                    },
+            },
+            InternalServer : {
+                description: 'Server Error!',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'Internal Server Error!'
+                                },
+                            },
+                        },
+                    },
+                },
             }
         },
     },

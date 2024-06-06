@@ -91,6 +91,7 @@ const InternalServer = {
 // Start Doc
 const createChat = {
     tags: ['Chat'],
+    summary: 'Create chat',
     description: 'Create chat on room',
     operationId: 'createChat',
     requestBody: {
@@ -106,12 +107,41 @@ const createChat = {
             description: 'Successfully!',
             content: {
                 'application/json': {
-                    schema: Chat
+                    schema: {
+                        type: 'object',
+                        properties: {
+                            error: {
+                                example: 'true'
+                            },
+                            message: {
+                                example: 'Berhasil mengubah data!'
+                            },
+                            chat: Chat
+                        }
+
+                    },
                 },
             },
         },
-        '400': {
+        '404': {
             description: 'Cannot Replied',
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                error: {
+                                    type: 'boolean',
+                                    example: 'true'
+                                },
+                                message: {
+                                    type: 'string',
+                                    example: 'Cannot Replied'
+                                },
+                            },
+                        },
+                    },
+                },
         },
         '500': InternalServer
     },
@@ -119,6 +149,7 @@ const createChat = {
 
 const getChat = {
     tags: ['Chat'],
+    summary: 'Get all chat',
     description: 'Get chat on room',
     operationId: 'getChat',
     security: [
@@ -128,7 +159,7 @@ const getChat = {
     ],
     parameters: [
         {
-            name: 'id',
+            name: 'user_id',
             in: 'path',
             description: 'Room ID',
             required: true,
@@ -150,7 +181,15 @@ const getChat = {
                 'application/json': {
                     schema: {
                         type: 'object',
-                        Chat
+                        properties: {
+                            error: {
+                                example: 'true'
+                            },
+                            message: {
+                                example: 'Berhasil mengubah data!'
+                            },
+                            chat: Chat
+                        }
                     }
                 },
             },
@@ -158,9 +197,13 @@ const getChat = {
         '401': {
             $ref: '#/components/responses/UnauthorizedError'
         },
-        '500': InternalServer,
+        '500': {
+            $ref: "#/components/responses/InternalServer"
+
+        },
     },
 };
+
 
 
 

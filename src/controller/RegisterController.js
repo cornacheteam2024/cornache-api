@@ -4,6 +4,7 @@ const { uploadToBucket } = require('../utils/uploadToBucket')
 const { generateAccessToken } = require('../middleware/authToken');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const { log } = require("console");
 // const { use } = require("../UserRoute");
 
 require('dotenv').config()
@@ -96,10 +97,11 @@ const onLoginController = (req, res) => {
 }
 
 const editProfilController = async (req, res) => {
-    const id = req.params.id
+    const user_id = req.params.user_id
+    // console.log(user_id);
     try {
-        const user = await getUserById(id);
-
+        const user = await getUserById(user_id);
+        // console.log(user);
         const profile = {
             username: user.username,
             avatar_img: user.avatar_img
@@ -114,7 +116,7 @@ const editProfilController = async (req, res) => {
             message: 'Gagal mengambil data'
         });
     }
-    
+
 
 }
 

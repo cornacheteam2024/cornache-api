@@ -36,8 +36,8 @@ async function getUserById(user_id) {
   userRef.forEach((item) => {
     data = item.data();
   });
+  // console.log(data);
   return data;
-
 }
 
 async function updateProfil(id, newData) {

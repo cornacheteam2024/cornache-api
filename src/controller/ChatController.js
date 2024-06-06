@@ -9,6 +9,14 @@ const createController = async (req, res) => {
     const { user_id, room_id, content } = req.body;
     const chat_id = crypto.randomUUID();
 
+    if (!user_id) {
+        return res.status(404).json({
+            error: true,
+            status: 'fails',
+            message : 'User tidak ditemukan!'
+
+        })
+    }
     try {
         const user = await getUserById(user_id);
         const chat = {
@@ -24,12 +32,12 @@ const createController = async (req, res) => {
         }
         await createChat(chat_id, chat)
 
-        res.status(200).json({
+        return res.status(200).json({
             error: false,
             status: 'success',
         })
     } catch (error) {
-        res.status(404).json({
+        return res.status(404).json({
             error: true,
             message: error.message
         })
@@ -47,6 +55,12 @@ const getChatController = async (req, res) => {
         return res.status(403).json({
             error: true,
             message: 'akses ditolak, harap login!'
+        })
+    }
+    if (!room_id) {
+        return res.status(404).json({
+            error: true,
+            message: 'Cannot replied'
         })
     }
 

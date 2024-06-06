@@ -37,15 +37,20 @@ app.use(
 );
 
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation, { explorer: true }));
 app.use('/', UserRoute);
-app.use("/", roomRoutes);
+app.use("/room", roomRoutes);
 app.use('/chat', ChatRoute);
 app.use('/history', HistoryRoute);
 
 
 
 app.use((error, req, res, next) => {
+  if (error) {
+    console.log(error);
+    next(error)
+    return
+  }
   res.status(400).json({
     message: error.message,
   });

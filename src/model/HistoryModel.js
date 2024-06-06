@@ -6,7 +6,7 @@ const historyRef = db.collection('predicts');
 const getAllHistories = async (user_id, page) => {
     // const user_id = req.params.id
 
-    const perPage = 2
+    const perPage = 5
     try {
 
 
@@ -49,7 +49,7 @@ const getAllHistories = async (user_id, page) => {
         const end = start + perPage
 
         const appear = freshData.slice(start, end);
-        console.log(appear);
+        // console.log(appear); 
         return appear;
     } catch (error) {
         throw new Error('Internal server error!');

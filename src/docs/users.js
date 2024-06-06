@@ -65,7 +65,27 @@ const TooLarge = {
                     },
                     message: {
                         type: 'string',
-                        example: 'Please use image profile under 5 MB!'
+                        example: 'Please use image profile under 1 MB!'
+                    },
+                },
+            },
+        },
+    },
+}
+const notMatch = {
+    description: 'Password not matching',
+    content: {
+        'application/json': {
+            schema: {
+                type: 'object',
+                properties: {
+                    error: {
+                        type: 'boolean',
+                        example: 'true'
+                    },
+                    message: {
+                        type: 'string',
+                        example: 'Password not mathcing'
                     },
                 },
             },
@@ -93,6 +113,26 @@ const InternalServer = {
         },
     },
 }
+const registerFailed = {
+    description: 'Register failed',
+    content: {
+        'application/json': {
+            schema: {
+                type: 'object',
+                properties: {
+                    error: {
+                        type: 'boolean',
+                        example: 'true'
+                    },
+                    message: {
+                        type: 'string',
+                        example: 'Lengkapi semua form!'
+                    },
+                },
+            },
+        },
+    },
+}
 
 // End Exeception
 
@@ -102,6 +142,7 @@ const InternalServer = {
 // start Doc
 const createUser = {
     tags: ['User'],
+    summary: 'Create new user',
     description: 'Register for new user',
     operationId: 'createUser',
     requestBody: {
@@ -120,49 +161,43 @@ const createUser = {
                     schema: {
                         type: 'object',
                         properties: {
-                            // error: {
-                            //     example: 'true'
-                            // },
-                            // message: {
-                            //     example: 'Berhasil register, silahkan login'
-                            // },
-                            // user: {
-                            // example: {
-                            user_id: {
-                                type: 'string',
-                                example: '60564fcb544047cdc3844818',
+                            error: {
+                                example: 'true'
                             },
-                            username: {
-                                type: 'string',
-                                example: 'John Snow',
+                            message: {
+                                example: 'Berhasil register, silahkan login'
                             },
-                            password: {
-                                type: 'string',
-                                example: 'Afdsf4teg',
+                            user: {
+                                example: {
+                                    user_id: {
+                                        type: 'string',
+                                        example: '60564fcb544047cdc3844818',
+                                    },
+                                    username: {
+                                        type: 'string',
+                                        example: 'John Snow',
+                                    },
+                                    password: {
+                                        type: 'string',
+                                        example: 'Afdsf4teg',
+                                    },
+
+                                },
+
                             },
-
-
-
-                            // },
-
-                            // },
-
                         },
                     },
                 },
             },
         },
-        '400': {
-            description: 'Register Failed',
-        },
-        '422': {
-            description: 'Password not matching',
-        },
+        '400': registerFailed,
+        '422': notMatch,
         '500': InternalServer
     },
 };
 const loginUser = {
     tags: ['User'],
+    summary: 'Login user',
     description: 'Create a new user in the system',
     operationId: 'loginUser',
     requestBody: {
@@ -181,20 +216,31 @@ const loginUser = {
                     schema: {
                         type: 'object',
                         properties: {
-
-                            user_id: {
-                                type: 'string',
-                                example: '60564fcb544047cdc3844818',
+                            error: {
+                                type: 'boolean',
+                                example: true
                             },
-                            username: {
+                            message: {
                                 type: 'string',
-                                example: 'John Snow',
+                                example: 'Berhasil login!'
                             },
-                            token: {
-                                type: 'string',
-                                example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFmdGVybWVyZ2luZyIsImlhdCI6MTcxNzU3Njk2NCwiZXhwIjoxNzE3NjYzMzY0fQ.6bYI3EoAcfRywdwtdXT0wdV2Fcc7sZXwWHtXjYamZsw',
-                            },
-
+                            user: {
+                                type: 'object',
+                                properties: {
+                                    user_id: {
+                                        type: 'string',
+                                        example: '60564fcb544047cdc3844818',
+                                    },
+                                    username: {
+                                        type: 'string',
+                                        example: 'John Snow',
+                                    },
+                                    token: {
+                                        type: 'string',
+                                        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFmdGVybWVyZ2luZyIsImlhdCI6MTcxNzU3Njk2NCwiZXhwIjoxNzE3NjYzMzY0fQ.6bYI3EoAcfRywdwtdXT0wdV2Fcc7sZXwWHtXjYamZsw',
+                                    },
+                                }
+                            }
                         },
                     },
                 },
@@ -227,6 +273,7 @@ const loginUser = {
 
 const getUser = {
     tags: ['User'],
+    summary: 'Get user by ID',
     description: 'Get user by ID',
     operationId: 'getUser',
     security: [
@@ -236,7 +283,7 @@ const getUser = {
     ],
     parameters: [
         {
-            name: 'id',
+            name: 'user_id',
             in: 'path',
             description: 'User ID',
             required: true,
@@ -251,36 +298,46 @@ const getUser = {
                     schema: {
                         type: 'object',
                         properties: {
-                            user_id: {
-                                type: 'string',
-                                example: '60564fcb544047cdc3844818',
+                            error: {
+                                example: 'true'
                             },
-                            username: {
-                                type: 'string',
-                                example: 'John Snow',
+                            message: {
+                                example: 'Berhasil mengubah data!'
                             },
-                            avatar_image: {
-                                type: 'string',
-                                example: 'ava.jpg',
+                            user: {
+                                type: 'object',
+                                properties: {
+                                    user_id: {
+                                        type: 'string',
+                                        example: '60564fcb544047cdc3844818',
+                                    },
+                                    username: {
+                                        type: 'string',
+                                        example: 'John Snow',
+                                    },
+                                    avatar_image: {
+                                        type: 'string',
+                                        example: 'ava.jpg',
+                                    },
+                                }
+
                             },
                         },
                     },
                 },
             },
         },
-        '401': {
-            $ref: '#/components/responses/UnauthorizedError'
-        },
-        '500': InternalServer,
+        '500': InternalServer
     },
 };
 const updateProfile = {
     tags: ['User'],
+    summary: 'Edit profile',
     description: 'Edit user profile',
     operationId: 'updateProfile',
     parameters: [
         {
-            name: 'id',
+            name: 'user_id',
             in: 'path',
             description: 'User ID',
             required: true,
@@ -303,17 +360,28 @@ const updateProfile = {
                     schema: {
                         type: 'object',
                         properties: {
-                            user_id: {
-                                type: 'string',
-                                example: '60564fcb544047cdc3844818',
+                            error: {
+                                example: 'true'
                             },
-                            username: {
-                                type: 'string',
-                                example: 'John Snow',
+                            message: {
+                                example: 'Berhasil mengubah data!'
                             },
-                            avatar_image: {
-                                type: 'string',
-                                example: 'ava.jpg',
+                            user: {
+                                type: 'object',
+                                properties: {
+                                    user_id: {
+                                        type: 'string',
+                                        example: '60564fcb544047cdc3844818',
+                                    },
+                                    username: {
+                                        type: 'string',
+                                        example: 'John Snow',
+                                    },
+                                    avatar_image: {
+                                        type: 'string',
+                                        example: 'ava.jpg',
+                                    },
+                                }
                             },
                         },
                     },
@@ -323,7 +391,8 @@ const updateProfile = {
         '415': TooLarge,
         '500': InternalServer,
     },
-};
+}
+
 
 // End Doc
 
