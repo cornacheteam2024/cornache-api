@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
   const JWT_KEY = process.env.JWT_KEY;
 
     const header = req.headers
-    const Istoken = header && header.authorization && header.authorization.split(' ')[0] == 'JWT';
+    const Istoken = header && header.authorization && header.authorization.split(' ')[0] == 'Bearer';
     const token = header.authorization.split(' ')[1]
 
     if (Istoken) {
@@ -21,6 +21,7 @@ const verifyToken = (req, res, next) => {
                 })
 
             } else {
+                // console.log(decoded);
                 res.locals.jwt = decoded
                 next();
             }

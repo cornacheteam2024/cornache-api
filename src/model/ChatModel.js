@@ -7,7 +7,7 @@ const createChat = (chat_id, data) => {
 }
 
 const getChats = async (room_id,page) => {
-    const perPage = 3;
+    const perPage = 5;
 
     try {
 

@@ -1,9 +1,16 @@
 // const bodyParser = require("body-parser");
+// import { apiDocumentation } from './docs/apiDoc';
+
 const express = require("express");
 
 const cors = require('cors');
 const ChatRoute = require('./routes/ChatRouter')
-const UserRoute = require('./routes/UserRoute')
+const UserRoute = require('./routes/UserRoute');
+const HistoryRoute = require('./routes/HistoryRoute');
+// const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const { apiDocumentation } = require('./docs/apiDoc')
+// const {swaggerSpec,swaggerUi} = require('./utils/swagger')
 // const formidableMiddleware = require('express-formidable');
 // const multer = require('./middleware/uploadImage')
 
@@ -15,6 +22,8 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 8000;
+
+
 
 app.use(express.urlencoded({ extended: false }));
 // app.use(formidableMiddleware())
@@ -28,9 +37,12 @@ app.use(
 );
 
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation));
 app.use('/', UserRoute);
 app.use("/", roomRoutes);
 app.use('/chat', ChatRoute);
+app.use('/history', HistoryRoute);
+
 
 
 app.use((error, req, res, next) => {
