@@ -1,15 +1,14 @@
 // const bodyParser = require("body-parser");
 const express = require("express");
 
-const cors = require('cors');
-const ChatRoute = require('./routes/ChatRouter')
-const UserRoute = require('./routes/UserRoute')
-// const formidableMiddleware = require('express-formidable');
-// const multer = require('./middleware/uploadImage')
-
-
+const cors = require("cors");
+const ChatRoute = require("./routes/ChatRouter");
+const UserRoute = require("./routes/UserRoute");
+const HistoryRoute = require("./routes/historyRoute");
 const roomRoutes = require("./routes/roomRoute");
 
+// const formidableMiddleware = require('express-formidable');
+// const multer = require('./middleware/uploadImage')
 
 require("dotenv").config();
 
@@ -27,11 +26,10 @@ app.use(
   })
 );
 
-
-app.use('/', UserRoute);
-app.use("/", roomRoutes);
-app.use('/chat', ChatRoute);
-
+app.use("/", UserRoute);
+app.use("/room", roomRoutes);
+app.use("/chat", ChatRoute);
+app.use("/history", ChatRoute);
 
 app.use((error, req, res, next) => {
   res.status(400).json({
