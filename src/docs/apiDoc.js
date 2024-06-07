@@ -44,6 +44,10 @@ const apiDocumentation = {
     },
     servers: [
         {
+            url: "https://cornache-api-umbv3jp3oa-et.a.run.app",
+            description: 'Production Server',
+        },
+        {
             url: 'http://localhost:8080',
             description: 'Local Server',
         },
@@ -51,6 +55,7 @@ const apiDocumentation = {
             url: "https://cornache-api-model-umbv3jp3oa-et.a.run.app",
             description: 'Predict image',
         },
+        
     ],
     tags: [
         {
