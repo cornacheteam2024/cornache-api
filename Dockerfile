@@ -1,13 +1,11 @@
-FROM node:20.13.1
+FROM node:20
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-# COPY .env .
-
 RUN npm install
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD [ "npm", "run", "start"]

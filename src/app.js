@@ -19,7 +19,7 @@ const roomRoutes = require("./routes/roomRoute");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: false }));
 // app.use(formidableMiddleware())
@@ -52,5 +52,5 @@ app.use((error, req, res, next) => {
 //     res.send('<h1>hello wold</h1>');
 // })
 app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+  console.log(`Listening on http://0.0.0.0:${port}`);
 });

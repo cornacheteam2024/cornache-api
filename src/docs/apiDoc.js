@@ -44,16 +44,12 @@ const apiDocumentation = {
     },
     servers: [
         {
-            url: 'http://localhost:8000',
+            url: 'http://localhost:8080',
             description: 'Local Server',
         },
         {
             url: "https://cornache-api-model-umbv3jp3oa-et.a.run.app",
             description: 'Predict image',
-        },
-        {
-            url: 'https://api.mysite.com',
-            description: 'Production Server',
         },
     ],
     tags: [
