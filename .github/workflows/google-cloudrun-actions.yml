@@ -56,7 +56,6 @@ env:
   REGION: asia-southeast2 # TODO: update Cloud Run service region
   JWT_KEY: ${{ secrets.JWT_KEY }}
   PORT: ${{ secrets.PORT }}
-  SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
   SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
   
