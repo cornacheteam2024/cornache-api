@@ -101,7 +101,7 @@ jobs:
           --region ${{env.REGION}} \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars GOOGLE_APPLICATION_CREDENTIALS=${{ env.GOOGLE_APPLICATION_CREDENTIALS }},JWT_KEY=${{ env.JWT_KEY }},SERVICE_ACCOUNT=${{env.SERVICE_ACCOUNT}}
+          --set-env-vars JWT_KEY=${{ env.JWT_KEY }}
 
       # If required, use the Cloud Run url output in later steps
       # - name: Show Output
