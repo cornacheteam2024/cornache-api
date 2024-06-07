@@ -46,7 +46,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   PROJECT_ID: cornache-caps # TODO: update Google Cloud project id
@@ -56,16 +56,15 @@ env:
   REGION: asia-southeast2 # TODO: update Cloud Run service region
   JWT_KEY: ${{ secrets.JWT_KEY }}
   PORT: ${{ secrets.PORT }}
+  SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-  
-  
 
 jobs:
   deploy:
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
 
     runs-on: ubuntu-latest
     steps:
@@ -75,7 +74,7 @@ jobs:
       # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v2'
+        uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}"
 
@@ -84,8 +83,7 @@ jobs:
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
         run: |-
-           gcloud auth configure-docker "${{env.GAR_LOCATION}}-docker.pkg.dev"
-        
+          gcloud auth configure-docker "${{env.GAR_LOCATION}}-docker.pkg.dev"
 
       - name: Build and Push Container
         run: |-
@@ -101,8 +99,7 @@ jobs:
           --region ${{env.REGION}} \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars GOOGLE_APPLICATION_CREDENTIALS=${{ env.GOOGLE_APPLICATION_CREDENTIALS }},JWT_KEY=${{ env.JWT_KEY }}
-          
+          --set-env-vars GOOGLE_APPLICATION_CREDENTIALS=${{ env.GOOGLE_APPLICATION_CREDENTIALS }},JWT_KEY=${{ env.JWT_KEY }},SERVICE_ACCOUNT=${{env.SERVICE_ACCOUNT}}
 
       # If required, use the Cloud Run url output in later steps
       # - name: Show Output
