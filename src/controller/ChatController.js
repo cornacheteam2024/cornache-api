@@ -2,6 +2,7 @@ const { timeStamp } = require("console");
 const { createChat, getChats } = require("../model/ChatModel");
 const { getUserById } = require("../model/userModel");
 const crypto = require('crypto');
+const moment = require("moment");
 
 
 
@@ -17,15 +18,14 @@ const createController = async (req, res) => {
 
         })
     }
-    // console.log(user_id);
+    const now = moment().format('HH:mm');
     try {
         const user = await getUserById(user_id);
-        console.log(user);
         const chat = {
             chat_id,
             room_id,
             content,
-            timestamp: new Date().getTime(),
+            timestamp: now,
             profile: {
                 user_id,
                 username: user.username,
@@ -52,7 +52,6 @@ const getChatController = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
 
     const token = req.headers.authorization;
-    // console.log(token);
     if (token === undefined) {
         return res.status(403).json({
             error: true,
@@ -80,6 +79,7 @@ const getChatController = async (req, res) => {
         res.status(200).json({
             error: false,
             message: `All chats on room ${room_id}`,
+            page,
             chats
 
         })
