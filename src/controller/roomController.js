@@ -12,13 +12,13 @@ async function getAllRoomController(req, res) {
   try {
     const [allRoom] = await getAllRoom();
 
-    res.status(200).json({
+    return res.status(200).json({
       error: false,
       message: "Berhasil mendapatkan semua Ruangan Diskusi",
       data: allRoom,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: true,
       message: "Gagal mendapatkan semua Ruangan Diskusi",
     });

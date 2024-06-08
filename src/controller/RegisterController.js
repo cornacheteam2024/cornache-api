@@ -70,7 +70,7 @@ const loginController = async (req, res) => {
     const isValid = bcrypt.compareSync(password, userRef.password);
 
     if (!isValid) {
-        res.status(404).json({
+        return res.status(404).json({
             error: true,
             message: 'Password Salah!'
         })
@@ -78,7 +78,7 @@ const loginController = async (req, res) => {
 
     userRef.token = generateAccessToken(username);
 
-    res.status(200).json({
+    return res.status(200).json({
         error: false,
         message: 'Login Berhasil !',
         user: userRef
@@ -106,12 +106,12 @@ const editProfilController = async (req, res) => {
             username: user.username,
             avatar_img: user.avatar_img
         }
-        res.status(200).json({
+        return res.status(200).json({
             error: false,
             user: profile
         });
     } catch (error) {
-        res.status(404).json({
+        return res.status(404).json({
             error: false,
             message: 'Gagal mengambil data'
         });

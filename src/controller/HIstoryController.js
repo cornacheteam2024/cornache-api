@@ -12,7 +12,7 @@ const getHistoriesController = async (req, res) => {
                 page,
             })
         }
-       return  res.status(200).json({
+       return res.status(200).json({
             error: false,
             message: 'Riwayat prediksi',
             page,

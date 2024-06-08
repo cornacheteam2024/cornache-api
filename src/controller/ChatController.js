@@ -76,7 +76,7 @@ const getChatController = async (req, res) => {
             })
         }
 
-        res.status(200).json({
+       return res.status(200).json({
             error: false,
             message: `All chats on room ${room_id}`,
             page,
@@ -84,7 +84,7 @@ const getChatController = async (req, res) => {
 
         })
     } catch (error) {
-        res.status(404).json({
+       return res.status(404).json({
             error: false,
             message: error.message,
 
