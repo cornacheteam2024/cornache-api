@@ -37,6 +37,14 @@ app.use('/', UserRoute);
 app.use("/room", roomRoutes);
 app.use('/chat', ChatRoute);
 app.use('/history', HistoryRoute);
+app.use('/', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    code: '200',
+    mesage: 'succesfully, for feature directly to /docs'
+  })
+  // res.redirect('/docs')
+})
 
 app.use((error, req, res, next) => {
   if (error) {
