@@ -1,19 +1,26 @@
 // const bodyParser = require("body-parser");
+// import { apiDocumentation } from './docs/apiDoc';
+
 const express = require("express");
 
 const cors = require("cors");
 const ChatRoute = require("./routes/ChatRouter");
 const UserRoute = require("./routes/UserRoute");
-const HistoryRoute = require("./routes/historyRoute");
-const roomRoutes = require("./routes/roomRoute");
 
+const HistoryRoute = require("./routes/HistoryRoute");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const { apiDocumentation } = require("./docs/apiDoc");
+// const {swaggerSpec,swaggerUi} = require('./utils/swagger')
 // const formidableMiddleware = require('express-formidable');
 // const multer = require('./middleware/uploadImage')
+
+const roomRoutes = require("./routes/roomRoute");
 
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: false }));
 // app.use(formidableMiddleware())
@@ -26,12 +33,30 @@ app.use(
   })
 );
 
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(apiDocumentation, { explorer: true })
+);
 app.use("/", UserRoute);
 app.use("/room", roomRoutes);
 app.use("/chat", ChatRoute);
-app.use("/history", ChatRoute);
+app.use("/history", HistoryRoute);
+app.use("/", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    code: "200",
+    mesage: "succesfully, for feature directly to /docs",
+  });
+  // res.redirect('/docs')
+});
 
 app.use((error, req, res, next) => {
+  if (error) {
+    console.log(error);
+    next(error);
+    return;
+  }
   res.status(400).json({
     message: error.message,
   });
@@ -40,5 +65,5 @@ app.use((error, req, res, next) => {
 //     res.send('<h1>hello wold</h1>');
 // })
 app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+  console.log(`Listening on http://0.0.0.0:${port}`);
 });

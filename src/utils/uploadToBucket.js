@@ -2,7 +2,7 @@ const { Storage } = require('@google-cloud/storage');
 
 const storage = new Storage({
     projectId: 'cornache-caps',
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+    // keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 
 const bucketName = "cornache-bucket";

@@ -1,6 +1,5 @@
 const { Firestore } = require("@google-cloud/firestore");
 const db = new Firestore();
-
 async function storeData(id, data) {
   const usersCollection = db.collection("users");
   return usersCollection.doc(id).set(data);
@@ -36,8 +35,8 @@ async function getUserById(user_id) {
   userRef.forEach((item) => {
     data = item.data();
   });
+  console.log(data);
   return data;
-
 }
 
 async function updateProfil(id, newData) {

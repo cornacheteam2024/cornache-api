@@ -4,6 +4,7 @@ const { uploadToBucket } = require('../utils/uploadToBucket')
 const { generateAccessToken } = require('../middleware/authToken');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const { log } = require("console");
 // const { use } = require("../UserRoute");
 
 require('dotenv').config()
@@ -69,7 +70,7 @@ const loginController = async (req, res) => {
     const isValid = bcrypt.compareSync(password, userRef.password);
 
     if (!isValid) {
-        res.status(404).json({
+        return res.status(404).json({
             error: true,
             message: 'Password Salah!'
         })
@@ -77,7 +78,7 @@ const loginController = async (req, res) => {
 
     userRef.token = generateAccessToken(username);
 
-    res.status(200).json({
+    return res.status(200).json({
         error: false,
         message: 'Login Berhasil !',
         user: userRef
@@ -96,25 +97,26 @@ const onLoginController = (req, res) => {
 }
 
 const editProfilController = async (req, res) => {
-    const id = req.params.id
+    const user_id = req.params.user_id
+    // console.log(user_id);
     try {
-        const user = await getUserById(id);
-
+        const user = await getUserById(user_id);
+        // console.log(user);
         const profile = {
             username: user.username,
             avatar_img: user.avatar_img
         }
-        res.status(200).json({
+        return res.status(200).json({
             error: false,
             user: profile
         });
     } catch (error) {
-        res.status(404).json({
+        return res.status(404).json({
             error: false,
             message: 'Gagal mengambil data'
         });
     }
-    
+
 
 }
 

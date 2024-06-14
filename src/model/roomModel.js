@@ -1,13 +1,13 @@
 const { Firestore } = require("@google-cloud/firestore");
 
-const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-const db = new Firestore({ keyFilename: key });
+// const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const db = new Firestore();
 
 async function getUserDetail(userId) {
   if (!userId) {
-    throw new Error("user_id diperlukan");
+    // throw new Error("user_id diperlukan");
+    return false;
   }
-
   try {
     const userRef = db.collection("users");
     const userSnapshot = await userRef.where("user_id", "==", userId).get();
@@ -22,7 +22,7 @@ async function getUserDetail(userId) {
 
     return userData;
   } catch (error) {
-    throw error;
+    throw new Error("eror bank");
   }
 }
 
