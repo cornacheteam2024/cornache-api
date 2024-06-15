@@ -7,6 +7,7 @@ const {
   updateRoom,
   deleteRoom,
 } = require("../model/roomModel");
+const moment = require("moment");
 
 async function getAllRoomController(req, res) {
   try {
@@ -49,7 +50,8 @@ async function createRoomController(req, res) {
   const imageUrl = req.file.cloudStoragePublicUrl;
 
   const room_id = crypto.randomUUID();
-  const createdAt = Date.now();
+  const today = Date.now();
+  const createdAt = moment(today).format("YYYY-MM-DD");
 
   if (!user_id) {
     return res.status(404).json({
@@ -95,7 +97,8 @@ async function updateRoomController(req, res) {
   const { name, description } = req.body;
   const { room_id } = req.params;
   const imageUrl = req.file.cloudStoragePublicUrl;
-  const updateAt = Date.now();
+  const today = Date.now();
+  const updateAt = moment(today).format("YYYY-MM-DD");
 
   try {
     const [getRoom] = await getRoomById(room_id);

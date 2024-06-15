@@ -1,6 +1,6 @@
 const { Firestore } = require("@google-cloud/firestore");
 
-// const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const key = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 const db = new Firestore();
 
 async function getUserDetail(userId) {

@@ -6,8 +6,9 @@ const express = require("express");
 const cors = require("cors");
 const ChatRoute = require("./routes/ChatRouter");
 const UserRoute = require("./routes/UserRoute");
+
 const HistoryRoute = require("./routes/HistoryRoute");
-const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { apiDocumentation } = require("./docs/apiDoc");
 // const {swaggerSpec,swaggerUi} = require('./utils/swagger')
@@ -32,22 +33,25 @@ app.use(
   })
 );
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation, { explorer: true }));
-app.use('/', UserRoute);
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(apiDocumentation, { explorer: true })
+);
+app.use("/", UserRoute);
 app.use("/room", roomRoutes);
 app.use('/chat', ChatRoute);
 app.use('/history', HistoryRoute);
-
-
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Route/Server not found' });
-});
+  // res.redirect('/docs')
+})
 
 app.use((error, req, res, next) => {
   if (error) {
     console.log(error);
-    next(error)
-    return
+    next(error);
+    return;
   }
   res.status(400).json({
     message: error.message,
