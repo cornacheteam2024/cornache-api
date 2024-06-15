@@ -123,20 +123,22 @@ const editProfilController = async (req, res) => {
 
 const updateProfilController = async (req, res) => {
     const user_id = req.params.id
-    const ava = req.file.cloudStoragePublicUrl
-    // const ava = cloudStoragePublicUrl
-    const { username } = req.body;
-
-    // const freshAva = 
     try {
         const user = await getUserById(user_id);
+        const { username } = req.body;
+        const newUsername = username ? username : user.username
+        let ava;
+        if (req.file === undefined) {
+            ava = user.avatar_img
+        } else {
+            ava = req.file.cloudStoragePublicUrl
+        }
         const data = {
-            "user_id": user_id,
-            "username": username,
+            "user_id": user.user_id,
+            "username": newUsername,
             "password": user.password,
             "avatar_img": ava
         }
-
         await updateProfil(user_id, data)
 
         res.status(200).json({

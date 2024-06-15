@@ -18,6 +18,10 @@ const createController = async (req, res) => {
 
         })
     }
+    // const time = new Date();
+    // const getHour = time.getHours();
+    // const getMinutes = time.getMinutes();
+    // console.log(`${getHour}:${getMinutes}`);
     const now = moment().format('HH:mm');
     try {
         const user = await getUserById(user_id);

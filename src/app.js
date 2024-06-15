@@ -37,14 +37,11 @@ app.use('/', UserRoute);
 app.use("/room", roomRoutes);
 app.use('/chat', ChatRoute);
 app.use('/history', HistoryRoute);
-app.use('/', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    code: '200',
-    mesage: 'succesfully, for feature directly to /docs'
-  })
-  // res.redirect('/docs')
-})
+
+
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Route/Server not found' });
+});
 
 app.use((error, req, res, next) => {
   if (error) {
@@ -56,6 +53,14 @@ app.use((error, req, res, next) => {
     message: error.message,
   });
 });
+app.use('/', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    code: '200',
+    mesage: 'succesfully, for feature directly to /docs'
+  })
+  // res.redirect('/docs')
+})
 // app.get('/', (req, res) => {
 //     res.send('<h1>hello wold</h1>');
 // })
