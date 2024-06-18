@@ -33,6 +33,52 @@ Swagger.io for API Endpoint Documentation
   https://cornache-api-umbv3jp3oa-et.a.run.app/docs
 ```
 
+
+## Intallation for local environment
+
+Before you install this project to your local environment you should install Cloud SDK and then configure ADC.
+
+```bash
+gcloud auth application-default login
+```
+
+Clone the project
+
+```bash
+  git clone https://github.com/cornacheteam2024/cornache-api.git
+```
+
+Go to the project directory
+
+```bash
+  cd cornache-api
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+Create .env for environment variable
+
+```bash
+  nano .env
+```
+Adding this code in .env file
+
+```bash
+  JWT_KEY = xxxxxxxx
+  PORT = 8080
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+
+
 ## Authors
 
 - [@FaisalHilmi](https://github.com/FaishalHilmi)
