@@ -18,11 +18,14 @@ const createController = async (req, res) => {
 
         })
     }
-    // const time = new Date();
-    // const getHour = time.getHours();
-    // const getMinutes = time.getMinutes();
-    // console.log(`${getHour}:${getMinutes}`);
-    const now = moment().format('HH:mm');
+    const time = new Date();
+    const getHour = time.getHours();
+    const getMinutes = time.getMinutes();
+
+    const formattedH = getHour.toString().padStart(2, '0');
+    const formattedM = getMinutes.toString().padStart(2, '0');
+    const now = `${formattedH}:${formattedM}`
+   
     try {
         const user = await getUserById(user_id);
         const chat = {
@@ -80,7 +83,7 @@ const getChatController = async (req, res) => {
             })
         }
 
-       return res.status(200).json({
+        return res.status(200).json({
             error: false,
             message: `All chats on room ${room_id}`,
             page,
@@ -88,7 +91,7 @@ const getChatController = async (req, res) => {
 
         })
     } catch (error) {
-       return res.status(404).json({
+        return res.status(404).json({
             error: false,
             message: error.message,
 
