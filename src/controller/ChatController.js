@@ -3,6 +3,7 @@ const { createChat, getChats } = require("../model/ChatModel");
 const { getUserById } = require("../model/userModel");
 const crypto = require('crypto');
 const moment = require("moment");
+const { toZonedTime, format } = require('date-fns-tz');
 
 
 
@@ -19,13 +20,11 @@ const createController = async (req, res) => {
         })
     }
     const time = new Date();
-    const getHour = time.getHours();
-    const getMinutes = time.getMinutes();
+    const timeZone = 'Asia/Jakarta';
+    const zonedDate = toZonedTime(time, timeZone);
+    const now = format(zonedDate, 'HH:mm', { timeZone });
 
-    const formattedH = getHour.toString().padStart(2, '0');
-    const formattedM = getMinutes.toString().padStart(2, '0');
-    const now = `${formattedH}:${formattedM}`
-   
+
     try {
         const user = await getUserById(user_id);
         const chat = {
