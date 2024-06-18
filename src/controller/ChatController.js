@@ -22,7 +22,7 @@ const createController = async (req, res) => {
     const time = new Date();
     const timeZone = 'Asia/Jakarta';
     const zonedDate = toZonedTime(time, timeZone);
-    const now = format(zonedDate, 'HH:mm', { timeZone });
+    const now = format(zonedDate, 'HH:mm', { timeZone })
 
 
     try {
