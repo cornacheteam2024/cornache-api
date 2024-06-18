@@ -1,5 +1,6 @@
 
-# Cornache API
+# Cornache API ![version](https://img.shields.io/badge/version-1.0.0-yellow.svg)
+
 
 ## Overview
 This repository is a documentation of the development api to build the backend side. this project was developed by the learning path cloud computing from the capstone project team "CORNACHE". The technology we use to develop this project is google cloud platform, nodejs, express. framework, and for the database using firestore.  
